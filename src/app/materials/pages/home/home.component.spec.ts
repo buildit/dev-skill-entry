@@ -2,22 +2,35 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HomeComponent } from './home.component';
 import {AuthService} from '../../../services/auth/auth.service';
+import {of} from 'rxjs';
+import SpyObj = jasmine.SpyObj;
+import createSpyObj = jasmine.createSpyObj;
+import {Router} from '@angular/router';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
+  let authServiceSpy: SpyObj<AuthService>;
+  let spyRouter: SpyObj<Router>;
 
   beforeEach(async(() => {
+    authServiceSpy = createSpyObj(['login']);
+    authServiceSpy.login.and.returnValue(of({}));
+
+    spyRouter = createSpyObj(['navigate']);
+
     TestBed.configureTestingModule({
       declarations: [ HomeComponent ],
       providers: [
         {
           provide: AuthService,
-          useValue: {
-            login: () => {},
-          },
-        }
-      ]
+          useValue: authServiceSpy,
+        },
+        {
+          provide: Router,
+          useValue: spyRouter,
+        },
+      ],
     })
     .compileComponents();
   }));
@@ -36,5 +49,17 @@ describe('HomeComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain('Dev Skill Entry');
+  });
+
+  describe('login method', () => {
+    it('should call login', () => {
+      component.login();
+      expect(authServiceSpy.login).toHaveBeenCalled();
+    });
+
+    it('should redirect to the user index', () => {
+      component.login();
+      expect(spyRouter.navigate).toHaveBeenCalledWith(['/users']);
+    });
   });
 });

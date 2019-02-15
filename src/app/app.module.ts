@@ -9,11 +9,13 @@ import {MaterialModule} from './material.module';
 import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {AngularFireAuthModule} from '@angular/fire/auth';
+import {UserIndexComponent} from './materials/pages/users/user-index/user-index.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    UserIndexComponent,
   ],
   imports: [
     BrowserModule,
