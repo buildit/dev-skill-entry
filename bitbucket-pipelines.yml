@@ -1,0 +1,10 @@
+image: trion/ng-cli-karma
+
+pipelines:
+  default:
+    - step:
+        caches:
+          - node
+        script:
+          - npm install
+          - npm run ci
