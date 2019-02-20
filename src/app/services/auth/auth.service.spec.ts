@@ -22,8 +22,8 @@ describe('AuthService', () => {
         {
           provide: AngularFireAuth,
           useValue: afAuthSpy,
-        }
-      ]
+        },
+      ],
     });
 
     service = TestBed.get(AuthService);
