@@ -1,0 +1,8 @@
+<mat-toolbar  color="primary">
+  <div class="container">
+    <div fxLayout="row" fxLayoutAlign="end center">
+      <button  fxFlex="0 1 auto" *ngIf="!authService.loggedIn" (click)="login()" mat-icon-button>Login</button>
+      <button  fxFlex="0 1 auto" *ngIf="authService.loggedIn" (click)="logout()" mat-icon-button>Logout</button>
+    </div>
+  </div>
+</mat-toolbar>
