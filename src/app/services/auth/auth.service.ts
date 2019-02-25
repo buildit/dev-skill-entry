@@ -13,6 +13,7 @@ export class AuthService {
   }
 
   get user(): firebase.User {
+    console.log('hello', this.afAuth.authState);
     return this.afAuth.auth.currentUser;
   }
 
