@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
 import { AuthService } from './auth.service';
-import {AngularFireAuth} from '@angular/fire/auth';
+import { AngularFireAuth } from '@angular/fire/auth';
 import createSpyObj = jasmine.createSpyObj;
 import SpyObj = jasmine.SpyObj;
-import {of} from 'rxjs';
+import { of, Observable } from 'rxjs';
 
 describe('AuthService', () => {
   let service: AuthService;
@@ -26,7 +26,28 @@ describe('AuthService', () => {
   beforeEach(() => {
     afAuthSpy = {
       auth: createSpyObj(['signInWithPopup', 'signOut']),
+      authState: of(Observable),
     };
+
+    let store = {};
+    const mockLocalStorage = {
+      getItem: (key: string): string => {
+        return key in store ? store[key] : null;
+      },
+      setItem: (key: string, value: string) => {
+        store[key] = `${value}`;
+      },
+      removeItem: (key: string) => {
+        delete store[key];
+      },
+      clear: () => {
+        store = {};
+      },
+    };
+
+    spyOn(localStorage, 'getItem').and.callFake(mockLocalStorage.getItem);
+    spyOn(localStorage, 'setItem').and.callFake(mockLocalStorage.setItem);
+    spyOn(localStorage, 'clear').and.callFake(mockLocalStorage.clear);
   });
 
   it('should be created', () => {
@@ -56,31 +77,21 @@ describe('AuthService', () => {
     });
   });
 
-  describe('user property', () => {
-    it('should return a user if a currrentUser is present', () => {
-      afAuthSpy.auth.currentUser = {};
-
+  describe('authenticated property', () => {
+    it('should return true for authenticated property when there is a user in localStorage', () => {
       populate();
 
-      expect(service.user).toBeTruthy();
-    });
-  });
+      localStorage.setItem('user', JSON.stringify({}));
 
-  describe('loggedIn property', () => {
-    it('should return true if there is a user', () => {
-      afAuthSpy.auth.currentUser = {};
-
-      populate();
-
-      expect(service.loggedIn).toBeTruthy();
+      expect(service.authenticated).toBeTruthy();
     });
 
-    it('should return false if there is not a user', () => {
-      afAuthSpy.auth.currentUser = null;
-
+    it('should return false for authenticated property when there is not a user in localStorage', () => {
       populate();
 
-      expect(service.loggedIn).toBeFalsy();
+      localStorage.clear();
+
+      expect(service.authenticated).toBeFalsy();
     });
   });
 });

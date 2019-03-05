@@ -26,6 +26,7 @@ export class NavComponent {
   logout() {
     this.authService.logout().subscribe(() => {
       this.zone.run(() => {
+        localStorage.clear();
         this.router.navigate(['/']);
       });
     });

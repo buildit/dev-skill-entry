@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './materials/organisms/nav/nav.component';
 import { AngularFireAuth } from '@angular/fire/auth';
 
+import createSpyObj = jasmine.createSpyObj;
+import {of, Observable} from 'rxjs';
+
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -21,10 +24,15 @@ describe('AppComponent', () => {
       providers: [
         {
           provide: AngularFireAuth,
-          useValue: {},
+          useValue: {
+            auth: createSpyObj(['signInWithPopup', 'signOut']),
+            authState: of(Observable),
+          },
         },
       ],
     }).compileComponents();
+
+
   }));
 
   it('should create the app', () => {

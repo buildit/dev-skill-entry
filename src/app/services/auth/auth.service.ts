@@ -1,23 +1,28 @@
 import { Injectable } from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {auth} from 'firebase';
-import {from, Observable} from 'rxjs';
+import {from, Observable, of} from 'rxjs';
 import {switchMap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  get loggedIn(): boolean {
-    return this.user != null;
+
+  get user(): any {
+    return localStorage.getItem('user');
   }
 
-  get user(): firebase.User {
-    console.log('hello', this.afAuth.authState);
-    return this.afAuth.auth.currentUser;
+  get authenticated(): boolean {
+    return !!localStorage.getItem('user');
   }
 
   constructor(private afAuth: AngularFireAuth) {
+    this.afAuth.authState.subscribe((authenticated) => {
+      if (authenticated) {
+        localStorage.setItem('user', JSON.stringify(authenticated));
+      }
+    });
   }
 
   login(): Observable<auth.UserCredential> {

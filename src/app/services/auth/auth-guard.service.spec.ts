@@ -9,7 +9,7 @@ import SpyObj = jasmine.SpyObj;
 
 describe('AuthGuardService', () => {
   let service: AuthGuardService;
-  let authService: {loggedIn: boolean};
+  let authService: {authenticated: boolean};
   let routerSpy: SpyObj<Router>;
 
   function populate() {
@@ -32,7 +32,7 @@ describe('AuthGuardService', () => {
 
   beforeEach(() => {
     authService = {
-      loggedIn: true,
+      authenticated: true,
     };
 
     routerSpy = createSpyObj(['navigate']);
@@ -45,22 +45,22 @@ describe('AuthGuardService', () => {
   });
 
   describe('canActivate method', () => {
-    it('should return true if the user is loggedIn', () => {
+    it('should return true if the user is authenticated', () => {
       populate();
 
       expect(service.canActivate(null, null)).toBeTruthy();
     });
 
-    it('should return false if the user is not loggedIn', () => {
-      authService.loggedIn = false;
+    it('should return false if the user is not authenticated', () => {
+      authService.authenticated = false;
 
       populate();
 
       expect(service.canActivate(null, null)).toBeFalsy();
     });
 
-    it('should reroute to / if loggedIn is false', () => {
-      authService.loggedIn = false;
+    it('should reroute to / if authenticated is false', () => {
+      authService.authenticated = false;
 
       populate();
       service.canActivate(null, null);
