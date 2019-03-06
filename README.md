@@ -1,5 +1,7 @@
 # DevSkillEntry
 
+[![Build Status](https://travis-ci.org/buildit/dev-skill-entry.svg?branch=master)](https://travis-ci.org/buildit/dev-skill-entry)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
 
 ## Development server
