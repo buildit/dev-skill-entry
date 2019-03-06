@@ -9,4 +9,5 @@ addons:
       - google-chrome-stable
 
 script:
+  - commitlint-travis
   - npm run ci
