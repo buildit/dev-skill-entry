@@ -1,6 +1,7 @@
 # DevSkillEntry
 
-[![Build Status](https://travis-ci.org/buildit/dev-skill-entry.svg?branch=master)](https://travis-ci.org/buildit/dev-skill-entry) [![Greenkeeper badge](https://badges.greenkeeper.io/buildit/dev-skill-entry.svg)](https://greenkeeper.io/)
+[![Build Status](https://travis-ci.org/buildit/dev-skill-entry.svg?branch=master)](https://travis-ci.org/buildit/dev-skill-entry)
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
 
@@ -13,6 +14,16 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 Please run the following command with [NVM](https://github.com/creationix/nvm) from the root to set the correct node version.
 
 `nvm use`
+
+### Making commits
+
+Commits should be made through [Commitizen](https://github.com/commitizen/cz-cli). To make a commit please run the following command.
+
+```bash
+npm run commit
+```
+
+Failure to conform to Commitizen standards will result in a rejected PR.
 
 ## Code scaffolding
 
