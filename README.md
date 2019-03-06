@@ -6,6 +6,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
+### Setting Node Version
+
+Please run the following command with [NVM](https://github.com/creationix/nvm) from the root to set the correct node version.
+
+`nvm use`
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
