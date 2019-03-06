@@ -1,10 +1,22 @@
 # DevSkillEntry
 
+[![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+### Making commits
+
+Commits should be made through [Commitizen](https://github.com/commitizen/cz-cli). To make a commit please run the following command.
+
+```bash
+npm run commit
+```
+
+Failure to conform to Commitizen standards will result in a rejected PR.
 
 ## Code scaffolding
 
