@@ -14,6 +14,10 @@
     "commit": "git-cz",
     "ci": "npm run build && npm run lint && npm run test-coverage:ci && npm run e2e:ci"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/buildit/dev-skill-entry.git"
+  },
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint",
@@ -50,6 +54,8 @@
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
     "@commitlint/travis-cli": "^7.5.2",
+    "@semantic-release/changelog": "^3.0.2",
+    "@semantic-release/git": "^7.0.8",
     "@types/jasmine": "~3.3.9",
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~11.10.5",
@@ -65,6 +71,7 @@
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "protractor": "~5.4.0",
+    "semantic-release": "^15.13.3",
     "ts-node": "~8.0.2",
     "tslint": "~5.13.1",
     "typescript": "~3.2.4"
