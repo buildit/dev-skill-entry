@@ -1,5 +1,6 @@
 # DevSkillEntry
 
+[![Build Status](https://travis-ci.org/buildit/dev-skill-entry.svg?branch=master)](https://travis-ci.org/buildit/dev-skill-entry)
 [![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)](http://commitizen.github.io/cz-cli/)
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.1.
@@ -7,6 +8,12 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+### Setting Node Version
+
+Please run the following command with [NVM](https://github.com/creationix/nvm) from the root to set the correct node version.
+
+`nvm use`
 
 ### Making commits
 
