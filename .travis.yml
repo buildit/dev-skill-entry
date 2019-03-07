@@ -11,3 +11,8 @@ addons:
 script:
   - commitlint-travis
   - npm run ci
+
+deploy:
+  - provider: script
+    skip_cleanup: true
+    script: npx semantic-release
