@@ -50,16 +50,4 @@ describe('HomeComponent', () => {
     const compiled = fixture.debugElement.nativeElement;
     expect(compiled.querySelector('h1').textContent).toContain('Dev Skill Entry');
   });
-
-  describe('login method', () => {
-    it('should call login', () => {
-      component.login();
-      expect(authServiceSpy.login).toHaveBeenCalled();
-    });
-
-    it('should redirect to the user index', () => {
-      component.login();
-      expect(spyRouter.navigate).toHaveBeenCalledWith(['/users']);
-    });
-  });
 });

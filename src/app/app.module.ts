@@ -10,12 +10,20 @@ import {AngularFireModule} from '@angular/fire';
 import {environment} from '../environments/environment';
 import {AngularFireAuthModule} from '@angular/fire/auth';
 import {UserIndexComponent} from './materials/pages/users/user-index/user-index.component';
+import { NavComponent } from './materials/organisms/nav/nav.component';
+import { SkillsPageComponent } from './materials/pages/skills/skills-page.component';
+import { SkillCardComponent } from './materials/molecules/skill-card/skill-card.component';
+import {FlexLayoutModule } from '@angular/flex-layout';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     UserIndexComponent,
+    NavComponent,
+    SkillsPageComponent,
+    SkillCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -24,8 +32,9 @@ import {UserIndexComponent} from './materials/pages/users/user-index/user-index.
     MaterialModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
+    FlexLayoutModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

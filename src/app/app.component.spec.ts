@@ -1,17 +1,38 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { MatIconModule, MatToolbarModule } from '@angular/material';
+
 import { AppComponent } from './app.component';
+import { NavComponent } from './materials/organisms/nav/nav.component';
+import { AngularFireAuth } from '@angular/fire/auth';
+
+import createSpyObj = jasmine.createSpyObj;
+import {of, Observable} from 'rxjs';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        MatIconModule,
+        MatToolbarModule,
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        NavComponent,
+      ],
+      providers: [
+        {
+          provide: AngularFireAuth,
+          useValue: {
+            auth: createSpyObj(['signInWithPopup', 'signOut']),
+            authState: of(Observable),
+          },
+        },
       ],
     }).compileComponents();
+
+
   }));
 
   it('should create the app', () => {
