@@ -14,6 +14,9 @@ import { NavComponent } from './materials/organisms/nav/nav.component';
 import { SkillsPageComponent } from './materials/pages/skills/skills-page.component';
 import { SkillCardComponent } from './materials/molecules/skill-card/skill-card.component';
 import {FlexLayoutModule } from '@angular/flex-layout';
+import { LoginComponent } from './materials/organisms/login/login.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -24,6 +27,7 @@ import {FlexLayoutModule } from '@angular/flex-layout';
     NavComponent,
     SkillsPageComponent,
     SkillCardComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,8 +37,10 @@ import {FlexLayoutModule } from '@angular/flex-layout';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAuthModule,
     FlexLayoutModule,
+    ReactiveFormsModule,
+    HttpClientModule,
   ],
-  providers: [],
+  providers: [HttpClientModule],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

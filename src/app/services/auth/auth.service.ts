@@ -25,8 +25,20 @@ export class AuthService {
     });
   }
 
-  login(): Observable<auth.UserCredential> {
+  loginWithGoogle(): Observable<auth.UserCredential> {
     return from(this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider()));
+  }
+
+  loginWithGithub(): Observable<auth.UserCredential> {
+    return from(this.afAuth.auth.signInWithPopup(new auth.GithubAuthProvider()));
+  }
+
+  loginWithEmail(email: string, password: string): Observable<auth.UserCredential> {
+    return from(this.afAuth.auth.signInWithEmailAndPassword(email, password));
+  }
+
+  register(email: string, password: string): Observable<auth.UserCredential> {
+    return from(this.afAuth.auth.createUserWithEmailAndPassword(email, password));
   }
 
   logout(): Observable<void> {
