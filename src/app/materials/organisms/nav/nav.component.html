@@ -2,7 +2,6 @@
   <div class="container">
     <div fxLayout="row" fxLayoutAlign="end center">
       <button fxFlex="0 1 auto" *ngIf="!authService.authenticated" (click)="login()" mat-icon-button>Login</button>
-      <button fxFlex="0 1 auto" *ngIf="!authService.authenticated" (click)="register()" mat-icon-button>Register</button>
       <button fxFlex="0 1 auto" *ngIf="authService.authenticated" (click)="logout()" mat-icon-button>Logout</button>
     </div>
   </div>

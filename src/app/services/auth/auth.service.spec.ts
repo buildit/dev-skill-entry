@@ -60,7 +60,7 @@ describe('AuthService', () => {
       afAuthSpy.auth.signInWithPopup.and.returnValue(of());
 
       populate();
-      service.login();
+      service.loginWithGoogle();
 
       expect(afAuthSpy.auth.signInWithPopup).toHaveBeenCalled();
     });

@@ -4,7 +4,6 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
-import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
