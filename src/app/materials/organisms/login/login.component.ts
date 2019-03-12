@@ -6,7 +6,7 @@ import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-o-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })

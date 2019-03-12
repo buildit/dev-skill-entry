@@ -1,5 +1,5 @@
 <mat-toolbar  color="primary">
-  <div class="container">
+  <div>
     <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="20px">
       <button fxFlex="0 1 auto" *ngIf="!authService.authenticated" (click)="register()" mat-icon-button>Register</button>
       <button fxFlex="0 1 auto" *ngIf="!authService.authenticated" (click)="login()" mat-icon-button>Login</button>
