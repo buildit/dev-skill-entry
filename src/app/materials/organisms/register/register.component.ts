@@ -21,7 +21,7 @@ export class RegisterComponent {
   register(form: NgForm) {
     const email = form.value.email;
     const password = form.value.password;
-    console.log(this.authService.register(email, password));
+
     this.authService.register(email, password).subscribe(() => {
       this.zone.run(() => {
         this.router.navigate(['/users']);

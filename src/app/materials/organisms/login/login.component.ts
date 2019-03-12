@@ -1,4 +1,4 @@
-import { Component, NgZone, Input } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
@@ -49,7 +49,7 @@ export class LoginComponent {
   loginWithEmail(form: NgForm) {
     const email = form.value.email;
     const password = form.value.password;
-    this.authService.loginWithEmail(email, password).subscribe(() => {
+    this.authService.loginWithEmail(email, password).subscribe((test) => {
       this.zone.run(() => {
         this.router.navigate(['/users']);
       });
