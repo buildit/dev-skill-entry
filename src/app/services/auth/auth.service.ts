@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {AngularFireAuth} from '@angular/fire/auth';
 import {auth} from 'firebase';
-import {from, Observable, of} from 'rxjs';
-import {switchMap} from 'rxjs/operators';
+import {from, Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +9,7 @@ import {switchMap} from 'rxjs/operators';
 export class AuthService {
 
   get user(): any {
-    return localStorage.getItem('user');
+    return JSON.parse(localStorage.getItem('user'));
   }
 
   get authenticated(): boolean {

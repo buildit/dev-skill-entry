@@ -47,7 +47,6 @@ export class LoginComponent {
   }
 
   loginWithEmail(form: NgForm) {
-    console.log(form);
     const email = form.value.email;
     const password = form.value.password;
     this.authService.loginWithEmail(email, password).subscribe(() => {
@@ -56,5 +55,4 @@ export class LoginComponent {
       });
     });
   }
-
 }

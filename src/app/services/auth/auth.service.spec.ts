@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 
 import { AuthService } from './auth.service';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -25,7 +25,7 @@ describe('AuthService', () => {
 
   beforeEach(() => {
     afAuthSpy = {
-      auth: createSpyObj(['signInWithPopup', 'signOut']),
+      auth: createSpyObj(['signInWithPopup', 'signInWithEmailAndPassword', 'createUserWithEmailAndPassword', 'signOut']),
       authState: of(Observable),
     };
 
@@ -56,13 +56,48 @@ describe('AuthService', () => {
   });
 
   describe('login method', () => {
-    it('should trigger the AngularFireAuth popup', () => {
-      afAuthSpy.auth.signInWithPopup.and.returnValue(of());
+    describe('google login', () => {
+      it('should trigger the AngularFireAuth popup', () => {
+        afAuthSpy.auth.signInWithPopup.and.returnValue(of());
+
+        populate();
+        service.loginWithGoogle();
+
+        expect(afAuthSpy.auth.signInWithPopup).toHaveBeenCalled();
+      });
+    });
+
+    describe('email login', () => {
+      it('should be able to login with email and password', () => {
+        afAuthSpy.auth.signInWithEmailAndPassword.and.returnValue(of());
+
+        populate();
+        service.loginWithEmail('test@test.com', 'test123');
+
+        expect(afAuthSpy.auth.signInWithEmailAndPassword).toHaveBeenCalled();
+      });
+    });
+
+    describe('github login', () => {
+      it('should be able to login with AngularFireAuth popup', () => {
+        afAuthSpy.auth.signInWithPopup.and.returnValue(of());
+
+        populate();
+        service.loginWithGithub();
+
+        expect(afAuthSpy.auth.signInWithPopup).toHaveBeenCalled();
+      });
+    });
+  });
+
+  describe('register method', () => {
+    it('user should be able to register a new account', () => {
+      afAuthSpy.auth.createUserWithEmailAndPassword.and.returnValue(of());
 
       populate();
-      service.loginWithGoogle();
+      service.register('test@test.com', 'test123');
 
-      expect(afAuthSpy.auth.signInWithPopup).toHaveBeenCalled();
+      expect(afAuthSpy.auth.createUserWithEmailAndPassword).toHaveBeenCalled();
     });
   });
 
@@ -92,6 +127,16 @@ describe('AuthService', () => {
       localStorage.clear();
 
       expect(service.authenticated).toBeFalsy();
+    });
+  });
+
+  describe('user property', () => {
+    it('should have a user if there is a user in localStorage', () => {
+      populate();
+
+      localStorage.setItem('user', JSON.stringify({}));
+
+      expect(service.user).toEqual({});
     });
   });
 });

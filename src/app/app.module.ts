@@ -17,6 +17,7 @@ import {FlexLayoutModule } from '@angular/flex-layout';
 import { LoginComponent } from './materials/organisms/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { RegisterComponent } from './materials/organisms/register/register.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
     SkillsPageComponent,
     SkillCardComponent,
     LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

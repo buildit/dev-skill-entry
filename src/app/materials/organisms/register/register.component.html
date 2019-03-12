@@ -1,0 +1,14 @@
+<mat-card class="register-card">
+  <mat-card-title fxLayoutAlign="center">REGISTER</mat-card-title>
+
+  <form [formGroup]="registerForm" fxLayoutGap="10px" novalidate #f="ngForm" (ngSubmit)="register(f)" fxLayout="column">
+      <mat-form-field>
+        <input matInput type="text" formControlName="email" placeholder="E-mail">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" formControlName="password" placeholder="Password">
+      </mat-form-field>
+      <button mat-raised-button type="submit" color="primary">REGISTER</button>
+    </form>
+</mat-card>

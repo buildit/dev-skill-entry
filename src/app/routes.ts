@@ -4,6 +4,7 @@ import {UserIndexComponent} from './materials/pages/users/user-index/user-index.
 import {SkillsPageComponent} from './materials/pages/skills/skills-page.component';
 import { AuthGuardService } from './services/auth/auth-guard.service';
 import { LoginComponent } from './materials/organisms/login/login.component';
+import { RegisterComponent } from './materials/organisms/register/register.component';
 
 export const routes: Routes = [
   {
@@ -13,6 +14,10 @@ export const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
+  },
+  {
+    path: 'register',
+    component: RegisterComponent,
   },
   {
     path: 'users',
