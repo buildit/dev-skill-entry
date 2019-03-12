@@ -127,5 +127,4 @@ describe('LoginComponent', () => {
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/users']);
     });
   });
-
 });
