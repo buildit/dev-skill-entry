@@ -50,7 +50,6 @@ export class LoginComponent {
     const email = form.value.email;
     const password = form.value.password;
     this.authService.loginWithEmail(email, password).subscribe((test) => {
-      console.log('test');
       this.zone.run(() => {
         this.router.navigate(['/users']);
       });
