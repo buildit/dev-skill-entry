@@ -1,0 +1,20 @@
+<mat-card class="o-login-loginCard">
+  <mat-card-title fxLayoutAlign="center">LOG IN</mat-card-title>
+
+  <div fxLayoutGap="10px" fxLayout="column">
+    <button fxLayoutAlign="center" mat-raised-button (click)="loginWithGoogle()" class="o-login-loginButton">LOG IN WITH GOOGLE <mat-icon svgIcon="google"></mat-icon></button>
+    <button fxLayoutAlign="center" mat-raised-button (click)="loginWithGithub()" class="o-login-loginButton">LOG IN WITH GITHUB <mat-icon svgIcon="github"></mat-icon></button>
+  </div>
+  <p class="o-login-dividerContainer"><span class="o-login-dividerSpan">OR</span></p>
+
+  <form [formGroup]="profileForm" fxLayoutGap="10px" novalidate #f="ngForm" (ngSubmit)="loginWithEmail(f)" fxLayout="column">
+    <mat-form-field>
+      <input matInput type="text" formControlName="email" placeholder="E-mail">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="text" formControlName="password" placeholder="Password">
+    </mat-form-field>
+    <button class="o-login-loginButton" mat-raised-button type="submit" color="primary">LOG IN WITH EMAIL</button>
+  </form>
+</mat-card>

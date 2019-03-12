@@ -7,24 +7,25 @@ import createSpyObj = jasmine.createSpyObj;
 import {of} from 'rxjs';
 import { Router } from '@angular/router';
 import { MatIconModule, MatToolbarModule } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('NavComponent', () => {
   let component: NavComponent;
   let fixture: ComponentFixture<NavComponent>;
   let authServiceSpy: SpyObj<AuthService>;
-  let spyRouter: SpyObj<Router>;
+  let routerSpy: SpyObj<Router>;
 
   beforeEach(async(() => {
     authServiceSpy = createSpyObj(['login', 'logout']);
-    authServiceSpy.login.and.returnValue(of({}));
     authServiceSpy.logout.and.returnValue(of({}));
 
-    spyRouter = createSpyObj(['navigate']);
+    routerSpy = createSpyObj(['navigate']);
 
     TestBed.configureTestingModule({
       imports: [
         MatIconModule,
         MatToolbarModule,
+        ReactiveFormsModule,
       ],
       declarations: [ NavComponent ],
       providers: [
@@ -34,7 +35,7 @@ describe('NavComponent', () => {
         },
         {
           provide: Router,
-          useValue: spyRouter,
+          useValue: routerSpy,
         },
       ],
     })
@@ -52,14 +53,9 @@ describe('NavComponent', () => {
   });
 
   describe('login method', () => {
-    it('should call login', () => {
+    it('should redirect to the login page', () => {
       component.login();
-      expect(authServiceSpy.login).toHaveBeenCalled();
-    });
-
-    it('should redirect to the user index', () => {
-      component.login();
-      expect(spyRouter.navigate).toHaveBeenCalledWith(['/users']);
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/login']);
     });
   });
 

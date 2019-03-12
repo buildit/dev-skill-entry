@@ -1,6 +1,6 @@
 <h1>Skill Entry</h1>
 
-<form>
+<form [formGroup]="skillsForm">
   <div fxLayout="row wrap" fxLayoutGap="20px grid">
     <app-skill-card
       *ngFor="let skill of skillList"

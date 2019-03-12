@@ -14,8 +14,8 @@ describe('HomeComponent', () => {
   let spyRouter: SpyObj<Router>;
 
   beforeEach(async(() => {
-    authServiceSpy = createSpyObj(['login']);
-    authServiceSpy.login.and.returnValue(of({}));
+    authServiceSpy = createSpyObj(['loginWithEmail']);
+    authServiceSpy.loginWithEmail.and.returnValue(of({}));
 
     spyRouter = createSpyObj(['navigate']);
 

@@ -10,6 +10,7 @@ addons:
 
 script:
   - commitlint-travis
+  - npm run lint:travis
   - npm run ci
 
 deploy:

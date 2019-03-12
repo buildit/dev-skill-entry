@@ -3,6 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { SkillsPageComponent } from './skills-page.component';
 import {SkillCardComponent } from '../../molecules/skill-card/skill-card.component';
 import {MatCardModule, MatSliderModule } from '@angular/material';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('SkillsPageComponent', () => {
   let component: SkillsPageComponent;
@@ -17,6 +18,7 @@ describe('SkillsPageComponent', () => {
       imports: [
         MatCardModule,
         MatSliderModule,
+        ReactiveFormsModule,
       ],
     })
     .compileComponents();

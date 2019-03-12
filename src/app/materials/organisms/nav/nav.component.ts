@@ -16,11 +16,11 @@ export class NavComponent {
     private zone: NgZone) {}
 
   login() {
-    this.authService.login().subscribe(() => {
-      this.zone.run(() => {
-        this.router.navigate(['/users']);
-      });
-    });
+    this.router.navigate(['/login']);
+  }
+
+  register() {
+    this.router.navigate(['/register']);
   }
 
   logout() {
