@@ -9,6 +9,6 @@
       <span>None</span>
       <span>Expert</span>
     </div>
-    <mat-slider [min]="0" [max]="10" [value]="value" [thumbLabel]="true"></mat-slider>
+    <mat-slider [min]="0" [max]="10" [value]="value" (change)="onChange($event)" [thumbLabel]="true"></mat-slider>
   </mat-card-content>
 </mat-card>

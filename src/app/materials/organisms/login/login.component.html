@@ -7,7 +7,7 @@
   </div>
   <p class="o-login-dividerContainer"><span class="o-login-dividerSpan">OR</span></p>
 
-  <form [formGroup]="profileForm" fxLayoutGap="10px" novalidate #f="ngForm" (ngSubmit)="loginWithEmail(f)" fxLayout="column">
+  <form [formGroup]="profileForm" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="loginWithEmail(f)" fxLayout="column">
     <mat-form-field>
       <input matInput type="text" formControlName="email" placeholder="E-mail">
     </mat-form-field>

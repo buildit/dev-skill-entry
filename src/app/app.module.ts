@@ -18,6 +18,7 @@ import { LoginComponent } from './materials/organisms/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './materials/organisms/register/register.component';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 
 @NgModule({
@@ -42,7 +43,7 @@ import { RegisterComponent } from './materials/organisms/register/register.compo
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [AngularFirestore],
   bootstrap: [AppComponent],
 })
 export class AppModule { }
