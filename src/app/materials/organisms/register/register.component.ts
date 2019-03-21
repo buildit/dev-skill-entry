@@ -15,6 +15,8 @@ export class RegisterComponent {
     password: new FormControl(''),
   });
 
+  message: string;
+
   constructor(private authService: AuthService,
               private router: Router,
               private zone: NgZone,
@@ -31,18 +33,15 @@ export class RegisterComponent {
         uid: resp.user.uid,
       };
 
-      this.data.getUser(userInfo).subscribe(doc => {
-        if (!doc.data()) {
-          this.data.setUser(userInfo)
-            .catch(err => console.error(err));
-        } else {
-          return;
-        }
-      });
+      this.data.setUser(userInfo);
+
 
       this.zone.run(() => {
         this.router.navigate(['/users']);
       });
-    });
+    },
+      err => {
+        this.message = err.message;
+      });
   }
 }

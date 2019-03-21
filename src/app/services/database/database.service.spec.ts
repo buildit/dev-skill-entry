@@ -6,7 +6,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import createSpyObj = jasmine.createSpyObj;
 import SpyObj = jasmine.SpyObj;
 
-fdescribe('DatabaseService', () => {
+describe('DatabaseService', () => {
   let service: DatabaseService;
   let afStoreSpy: SpyObj<any>;
 

@@ -34,6 +34,7 @@ export class LoginComponent {
 
   loginWithGoogle() {
     this.authService.loginWithGoogle().subscribe((resp) => {
+      console.log('hello', resp);
       this.sendUser(resp);
 
       this.zone.run(() => {
@@ -44,9 +45,9 @@ export class LoginComponent {
 
   loginWithGithub() {
     this.authService.loginWithGithub().subscribe((resp) => {
-      this.sendUser(resp);
 
       this.zone.run(() => {
+        this.sendUser(resp);
         this.router.navigate(['/users']);
       });
     });
@@ -65,6 +66,7 @@ export class LoginComponent {
   }
 
   sendUser(resp) {
+    console.log('resp.user', resp );
     const userInfo = {
       displayName: resp.user.displayName,
       email: resp.user.email,
