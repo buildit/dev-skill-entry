@@ -18,7 +18,10 @@ export class SkillsPageComponent implements OnInit {
   skillsForm = new FormGroup({});
 
   fetchedSkills;
-  uid = this.authService.user.uid;
+
+  get uid() {
+    return this.authService.user.uid;
+  }
 
   constructor(private data: DatabaseService,
               private authService: AuthService) {}
@@ -47,8 +50,14 @@ export class SkillsPageComponent implements OnInit {
     databaseObj[0] = skillSet;
 
     this.data.setSkills(this.uid, databaseObj)
-      .then(resp => console.log(resp))
-      .catch(err => console.error(err));
+      .then(doc => {
+        if (doc.exists) {
+          console.log('Document data:', doc.data());
+        } else {
+          console.log('No such document!');
+        }
+      })
+      .catch(err => console.error('Error getting document:', err));
   }
 
   getSkills() {

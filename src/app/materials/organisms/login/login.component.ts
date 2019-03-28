@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
 import { DatabaseService } from 'src/app/services/database/database.service';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-o-login',
@@ -34,7 +35,6 @@ export class LoginComponent {
 
   loginWithGoogle() {
     this.authService.loginWithGoogle().subscribe((resp) => {
-      console.log('hello', resp);
       this.sendUser(resp);
 
       this.zone.run(() => {
@@ -66,7 +66,6 @@ export class LoginComponent {
   }
 
   sendUser(resp) {
-    console.log('resp.user', resp );
     const userInfo = {
       displayName: resp.user.displayName,
       email: resp.user.email,
@@ -74,9 +73,11 @@ export class LoginComponent {
     };
 
     this.data.getUser(userInfo).subscribe(doc => {
-      if (!doc.data()) {
+      if (!doc.exists) {
         this.data.setUser(userInfo)
-          .catch(err => console.error(err));
+          .catch(err => {
+            throwError(err);
+          });
       } else {
         return;
       }

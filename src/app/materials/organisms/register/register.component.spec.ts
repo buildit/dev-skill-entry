@@ -33,16 +33,8 @@ describe('RegisterComponent', () => {
     authServiceSpy = createSpyObj(['register']);
     authServiceSpy.register.and.returnValue(of({user: { displayName: 'Spencer', email: 'test@test.com', uid: '1234'}}));
 
-    const data = {
-      set: jasmine.createSpy('set').and.returnValue(Promise),
-    };
-
-    const collectionStub = {
-      doc: jasmine.createSpy('doc').and.returnValue(data),
-    };
-
     const angularFirestoreSpy = {
-      collection: jasmine.createSpy('collection').and.returnValue(collectionStub),
+      collection: jasmine.createSpy('collection').and.returnValue({}),
     };
 
     databaseServiceSpy = createSpyObj(['setUser']);

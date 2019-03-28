@@ -6,7 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { of, Observable } from 'rxjs';
+import { of, Observable, throwError } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -15,6 +15,7 @@ import createSpyObj = jasmine.createSpyObj;
 import { AuthService } from 'src/app/services/auth/auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { DatabaseService } from 'src/app/services/database/database.service';
+import { database } from 'firebase';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -42,29 +43,22 @@ describe('LoginComponent', () => {
       },
     },
 
-    doc = {
-      data: jasmine.createSpy('data').and.returnValue(of()),
-    },
-
     authServiceSpy = createSpyObj(['loginWithGoogle', 'loginWithGithub', 'loginWithEmail']);
     authServiceSpy.loginWithGoogle.and.returnValue(of(resp));
     authServiceSpy.loginWithGithub.and.returnValue(of(resp));
     authServiceSpy.loginWithEmail.and.returnValue(of(resp));
 
-    const data = {
-      set: jasmine.createSpy('set').and.returnValue(Promise),
-    };
-
-    const collectionStub = {
-      doc: jasmine.createSpy('doc').and.returnValue(data),
-    };
-
     const angularFirestoreSpy = {
-      collection: jasmine.createSpy('collection').and.returnValue(collectionStub),
+      collection: jasmine.createSpy('collection').and.returnValue({}),
     };
 
-    databaseServiceSpy = createSpyObj(['getUser']);
+    doc = {
+      data: jasmine.createSpy('data').and.returnValue(of()),
+    },
+
+    databaseServiceSpy = createSpyObj(['setUser', 'getUser', 'sendUser']);
     databaseServiceSpy.getUser.and.returnValue(of(doc));
+    databaseServiceSpy.setUser.and.returnValue(new Promise((resolve, reject) => {}));
 
     TestBed.configureTestingModule({
       imports: [
@@ -119,7 +113,7 @@ describe('LoginComponent', () => {
       expect(authServiceSpy.loginWithGoogle).toHaveBeenCalled();
     });
 
-    it('should send user to database when loggin with google', () => {
+    it('should send user to database when logging in with google', () => {
       const userInfo = {
         displayName: 'Spencer',
         email: 'test@test.com',
@@ -131,7 +125,7 @@ describe('LoginComponent', () => {
       expect(databaseServiceSpy.getUser).toHaveBeenCalledWith(userInfo);
     });
 
-    it('upon successful login with Google should be redirected to /users', () => {
+    it('should be redirected to /users upon successful login with Google', () => {
       component.loginWithGoogle();
 
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/users']);
@@ -145,7 +139,7 @@ describe('LoginComponent', () => {
       expect(authServiceSpy.loginWithGithub).toHaveBeenCalled();
     });
 
-    it('should send user to database when loggin with github', () => {
+    it('should send user to database when logging in with github', () => {
       const userInfo = {
         displayName: 'Spencer',
         email: 'test@test.com',
@@ -208,6 +202,32 @@ describe('LoginComponent', () => {
       component.loginWithEmail(form as any);
 
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/users']);
+    });
+  });
+
+  describe('sendUser', () => {
+    it('should return an error when the databaseService.setUser has an error', () => {
+      component.loginWithGithub();
+
+      databaseServiceSpy.getUser.and.returnValue(of());
+
+      const userInfo = {
+        displayName: 'Spencer',
+        email: 'test@test.com',
+        uid: '1234',
+      };
+
+
+      databaseServiceSpy.setUser(userInfo)
+        .catch(err => {
+          expect(err).toEqual(new Error('didn\'t work'));
+        });
+    });
+
+    it('should setUser if that user does not exist in the database', () => {
+      component.loginWithGithub();
+
+
     });
   });
 });
