@@ -59,6 +59,13 @@ describe('NavComponent', () => {
     });
   });
 
+  describe('register method', () => {
+    it('should redirect to the register page', () => {
+      component.register();
+      expect(routerSpy.navigate).toHaveBeenCalledWith(['/register']);
+    });
+  });
+
   describe('logout method', () => {
     it('should call logout', () => {
       component.logout();
