@@ -11,13 +11,11 @@ import { AuthService } from 'src/app/services/auth/auth.service';
   templateUrl: './skills-page.component.html',
   styleUrls: ['./skills-page.component.scss'],
 })
-export class SkillsPageComponent implements OnInit {
+export class SkillsPageComponent implements AfterViewInit {
   @ViewChildren(SkillCardComponent) components: QueryList<SkillCardComponent>;
   skillList: ISkillDisplay[] = skillList;
 
   skillsForm = new FormGroup({});
-
-  fetchedSkills;
 
   get uid() {
     return this.authService.user.uid;
@@ -26,7 +24,7 @@ export class SkillsPageComponent implements OnInit {
   constructor(private data: DatabaseService,
               private authService: AuthService) {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.getSkills();
   }
 
@@ -50,27 +48,18 @@ export class SkillsPageComponent implements OnInit {
     databaseObj[0] = skillSet;
 
     this.data.setSkills(this.uid, databaseObj)
-      .then(doc => {
-        if (doc.exists) {
-          console.log('Document data:', doc.data());
-        } else {
-          console.log('No such document!');
-        }
-      })
       .catch(err => console.error('Error getting document:', err));
   }
 
   getSkills() {
     this.data.getSkills(this.uid).subscribe((doc) => {
       if (doc.data().skillSet) {
-        this.fetchedSkills = doc.data().skillSet[0];
-
+        const fetchedSkills = doc.data().skillSet[0];
         const skills = this.components.toArray();
-        let filteredSkill;
 
         skills.forEach(componentSkill => {
-          filteredSkill = skillList.filter(skill => skill.displayName === componentSkill.title);
-          const updatedSkill = this.fetchedSkills.filter(skill => skill.id === filteredSkill[0].id);
+          const filteredSkill = skillList.filter(skill => skill.displayName === componentSkill.title);
+          const updatedSkill = fetchedSkills.filter(skill => skill.id === filteredSkill[0].id);
           componentSkill.value = updatedSkill[0].value;
         });
       }

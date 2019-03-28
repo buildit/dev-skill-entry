@@ -45,9 +45,9 @@ export class LoginComponent {
 
   loginWithGithub() {
     this.authService.loginWithGithub().subscribe((resp) => {
+      this.sendUser(resp);
 
       this.zone.run(() => {
-        this.sendUser(resp);
         this.router.navigate(['/users']);
       });
     });
@@ -76,7 +76,7 @@ export class LoginComponent {
       if (!doc.exists) {
         this.data.setUser(userInfo)
           .catch(err => {
-            throwError(err);
+            return throwError(err);
           });
       } else {
         return;

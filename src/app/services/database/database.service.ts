@@ -1,30 +1,27 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DatabaseService {
-  usersRef;
 
-  constructor(private afs: AngularFirestore) {
-    this.usersRef = this.afs.collection('users');
+  constructor(private afs: AngularFirestore) {}
+
+  setSkills(uid: string, skillSet: {}): Promise<any> {
+    return this.afs.collection('users').doc(uid).update({skillSet});
   }
 
-  setSkills(uid, skillSet) {
-    return this.usersRef.doc(uid).update({skillSet});
+  getSkills(uid: string): Observable<firebase.firestore.DocumentData> {
+    return this.afs.collection('users').doc(uid).get();
   }
 
-  getSkills(uid) {
-    return this.usersRef.doc(uid).get();
+  setUser(userInfo: { displayName, email, uid }) {
+    return this.afs.collection('users').doc(userInfo.uid).set({userInfo});
   }
 
-  setUser(userInfo) {
-    return this.usersRef.doc(userInfo.uid).set({userInfo});
-  }
-
-  getUser(userInfo) {
-    return this.usersRef.doc(userInfo.uid).get();
+  getUser(userInfo: { displayName, email, uid }): Observable<firebase.firestore.DocumentData> {
+    return this.afs.collection('users').doc(userInfo.uid).get();
   }
 }

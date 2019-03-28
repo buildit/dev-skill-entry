@@ -5,18 +5,14 @@ import { AngularFirestore } from '@angular/fire/firestore';
 
 import createSpyObj = jasmine.createSpyObj;
 import SpyObj = jasmine.SpyObj;
-import { of } from 'rxjs';
-import { subscribeOn } from 'rxjs/operators';
 
 describe('DatabaseService', () => {
   let service: DatabaseService;
   let afStoreSpy: SpyObj<any>;
-  let databaseServiceSpy: SpyObj<any>;
-  let doc: SpyObj<any>;
 
   const uid = '1234';
 
-  const setSkills = {
+  const skillSet = {
     0: [
       {
         id: 'angular2',
@@ -34,21 +30,11 @@ describe('DatabaseService', () => {
   };
 
   function populate() {
-    databaseServiceSpy = createSpyObj(['setSkills', 'getSkills', 'setUser', 'getUser']);
-    databaseServiceSpy.setSkills.and.returnValue(new Promise((reject, resolve) => {}));
-    databaseServiceSpy.getSkills.and.returnValue(of());
-    databaseServiceSpy.setUser.and.returnValue(new Promise((reject, resolve) => {}));
-    databaseServiceSpy.getUser.and.returnValue(of());
-
     TestBed.configureTestingModule({
       providers: [
         {
           provide: AngularFirestore,
           useValue: afStoreSpy,
-        },
-        {
-          provide: DatabaseService,
-          useValue: databaseServiceSpy,
         },
       ],
     });
@@ -57,8 +43,13 @@ describe('DatabaseService', () => {
   }
 
   beforeEach(() => {
-    afStoreSpy = createSpyObj(['collection']);
-    afStoreSpy.collection.and.returnValue();
+    afStoreSpy = createSpyObj('afStoreSpy', ['collection', 'doc', 'update', 'set', 'get']);
+
+    afStoreSpy.collection.and.returnValue(afStoreSpy);
+    afStoreSpy.doc.and.returnValue(afStoreSpy);
+    afStoreSpy.update.and.returnValue(afStoreSpy);
+    afStoreSpy.get.and.returnValue(afStoreSpy);
+    afStoreSpy.set.and.returnValue(afStoreSpy);
   });
 
   it('should be created', () => {
@@ -70,26 +61,9 @@ describe('DatabaseService', () => {
     it('should set skills in the database when setSkills is called', () => {
       populate();
 
-      service.setSkills(uid, setSkills);
+      service.setSkills(uid, skillSet);
 
-      expect(databaseServiceSpy.setSkills).toHaveBeenCalled();
-    });
-
-    it('should call setSkills with an uid and skills object', () => {
-      populate();
-
-      service.setSkills(uid, setSkills);
-
-      expect(databaseServiceSpy.setSkills).toHaveBeenCalledWith(uid, setSkills);
-    });
-
-    it('should return a promise when setSkills is called', () => {
-      populate();
-
-      service.setSkills(uid, setSkills)
-        .then(resp => {
-          expect(resp).toEqual(new Promise((resolve, reject) => {}));
-        });
+      expect(afStoreSpy.collection).toHaveBeenCalled();
     });
   });
 
@@ -99,27 +73,7 @@ describe('DatabaseService', () => {
 
       service.getSkills(uid);
 
-      expect(databaseServiceSpy.getSkills).toHaveBeenCalled();
-    });
-
-    it('should call getSkills with a uid', () => {
-      populate();
-
-      service.getSkills(uid);
-
-      expect(databaseServiceSpy.getSkills).toHaveBeenCalledWith(uid);
-    });
-
-    it('should return an Observable when getSkills is called', () => {
-      populate();
-
-      doc = {
-        data: jasmine.createSpy('data').and.returnValue(of()),
-      },
-
-      service.getSkills(uid).subscribe((resp) => {
-        expect(resp).toEqual(of());
-      });
+      expect(afStoreSpy.collection).toHaveBeenCalled();
     });
   });
 
@@ -129,27 +83,13 @@ describe('DatabaseService', () => {
 
       const userInfo = {
         displayName: 'Spencer Hilvitz',
-        mail: 'spencerhilvitz@gmail.com',
+        email: 'spencerhilvitz@gmail.com',
         uid: 'I4EbE9qJCeQLSRcnNRgz7J2ncVG2',
       };
 
       service.setUser(userInfo);
 
-      expect(databaseServiceSpy.setUser).toHaveBeenCalled();
-    });
-
-    it('should call setUser with userInfo', () => {
-      populate();
-
-      const userInfo = {
-        displayName: 'Spencer Hilvitz',
-        mail: 'spencerhilvitz@gmail.com',
-        uid: 'I4EbE9qJCeQLSRcnNRgz7J2ncVG2',
-      };
-
-      service.setUser(userInfo);
-
-      expect(databaseServiceSpy.setUser).toHaveBeenCalledWith(userInfo);
+      expect(afStoreSpy.collection).toHaveBeenCalled();
     });
   });
 
@@ -159,13 +99,13 @@ describe('DatabaseService', () => {
 
       const userInfo = {
         displayName: 'Spencer Hilvitz',
-        mail: 'spencerhilvitz@gmail.com',
+        email: 'spencerhilvitz@gmail.com',
         uid: 'I4EbE9qJCeQLSRcnNRgz7J2ncVG2',
       };
 
       service.getUser(userInfo);
 
-      expect(databaseServiceSpy.getUser).toHaveBeenCalled();
+      expect(afStoreSpy.collection).toHaveBeenCalled();
     });
   });
 });

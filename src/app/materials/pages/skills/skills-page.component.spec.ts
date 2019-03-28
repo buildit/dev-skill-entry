@@ -20,6 +20,11 @@ describe('SkillsPageComponent', () => {
   let doc: SpyObj<any>;
   let authServiceSpy: SpyObj<any>;
   let setSkillsSpy: SpyObj<any>;
+  let resp: SpyObj<any>;
+  let afAuthSpy: SpyObj<any>;
+  const formGroup = FormGroup;
+  let skillSet: SpyObj<any>;
+  let data: SpyObj<any>;
 
   @Component({
     selector: 'app-skill-card',
@@ -31,8 +36,13 @@ describe('SkillsPageComponent', () => {
   }
 
   beforeEach(async(() => {
-    let afAuthSpy: SpyObj<any>;
-    const formGroup = FormGroup;
+    resp = {
+      user: {
+        displayName: 'Spencer',
+        email: 'test@test.com',
+        uid: '1234',
+      },
+    };
 
     const user = {
       uid: '1234',
@@ -56,8 +66,29 @@ describe('SkillsPageComponent', () => {
     spyOn(localStorage, 'getItem').and.callFake(mockLocalStorage.getItem);
     spyOn(localStorage, 'setItem').and.callFake(mockLocalStorage.setItem);
 
+    skillSet = {
+      0: [
+        {
+          id: 'angular2',
+          value: 5,
+        },
+        {
+          id: 'vue',
+          value: 5,
+        },
+        {
+          id: 'react',
+          value: 5,
+        },
+      ],
+    };
+
+    data = {
+      skillSet,
+    };
+
     doc = {
-      data: jasmine.createSpy('data').and.returnValue(of({skillSet: []})),
+      data: jasmine.createSpy('data').and.returnValue(data),
     },
 
     databaseServiceSpy = createSpyObj(['getSkills', 'setSkills']);
@@ -137,14 +168,28 @@ describe('SkillsPageComponent', () => {
 
       expect(databaseServiceSpy.setSkills).toHaveBeenCalled();
     });
+
+    it('should have an error if there is an error getting a document', (done) => {
+      component.setSkills();
+
+      databaseServiceSpy.setSkills.and.returnValue(Promise.reject('didn\'t work'));
+
+      databaseServiceSpy.setSkills(resp.user.uid, skillSet)
+        .catch(err => {
+          expect(err).toEqual('didn\'t work');
+          done();
+        });
+
+
+    });
   });
 
   describe('Get Skills', () => {
     it('should get skills from the database', () => {
-      component.getSkills();
-
       expect(databaseServiceSpy.getSkills).toHaveBeenCalled();
     });
+
+
   });
 
 });
