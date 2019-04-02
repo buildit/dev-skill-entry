@@ -32,9 +32,8 @@ export class SkillsPageComponent implements AfterViewInit {
   setSkills() {
     const skills = this.components.toArray();
     const skillSet = [];
-    const databaseObj = {};
 
-    skills.forEach((component, i) => {
+    skills.forEach((component) => {
       const skill = skillList.filter((singleSkill: ISkillDisplay) => singleSkill.displayName === component.title);
 
       const newSkill = {
@@ -45,16 +44,14 @@ export class SkillsPageComponent implements AfterViewInit {
       skillSet.push(newSkill);
     });
 
-    databaseObj[0] = skillSet;
-
-    this.data.setSkills(this.uid, databaseObj)
+    this.data.setSkills(this.uid, JSON.stringify(skillSet))
       .catch(err => console.error('Error getting document:', err));
   }
 
   getSkills() {
     this.data.getSkills(this.uid).subscribe((doc) => {
       if (doc.data().skillSet) {
-        const fetchedSkills = doc.data().skillSet[0];
+        const fetchedSkills = JSON.parse(doc.data().skillSet);
         const skills = this.components.toArray();
 
         skills.forEach(componentSkill => {
