@@ -50,9 +50,13 @@ export class SkillsPageComponent implements AfterViewInit {
 
   getSkills() {
     this.data.getSkills(this.uid).subscribe((doc) => {
+      console.log(doc.data());
       if (doc.data().skillSet) {
         const fetchedSkills = JSON.parse(doc.data().skillSet);
         const skills = this.components.toArray();
+
+        console.log('fetchedSkills', fetchedSkills);
+        console.log('skills', skills);
 
         skills.forEach(componentSkill => {
           const filteredSkill = skillList.filter(skill => skill.displayName === componentSkill.title);

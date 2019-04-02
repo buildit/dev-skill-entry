@@ -66,7 +66,7 @@ describe('SkillsPageComponent', () => {
     spyOn(localStorage, 'getItem').and.callFake(mockLocalStorage.getItem);
     spyOn(localStorage, 'setItem').and.callFake(mockLocalStorage.setItem);
 
-    skillSet = [
+    skillSet = JSON.stringify([
         {
           id: 'angular2',
           value: 5,
@@ -79,9 +79,11 @@ describe('SkillsPageComponent', () => {
           id: 'react',
           value: 5,
         },
-      ];
+      ]);
 
-    data = JSON.stringify(skillSet);
+    data = {
+      skillSet,
+    };
 
     doc = {
       data: jasmine.createSpy('data').and.returnValue(data),
