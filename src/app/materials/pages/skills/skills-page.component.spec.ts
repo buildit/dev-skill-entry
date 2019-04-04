@@ -56,7 +56,11 @@ describe('SkillsPageComponent', () => {
     const store = {};
     const mockLocalStorage = {
       getItem: (key: string): string => {
-        return key in store ? store[key] : null;
+        if (key in store) {
+          return store[key];
+        } else {
+          return null;
+        }
       },
       setItem: (key: string, value: string) => {
         store[key] = `${value}`;
