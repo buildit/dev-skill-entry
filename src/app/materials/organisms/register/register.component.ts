@@ -35,7 +35,6 @@ export class RegisterComponent {
 
       this.data.setUser(userInfo);
 
-
       this.zone.run(() => {
         this.router.navigate(['/users']);
       });

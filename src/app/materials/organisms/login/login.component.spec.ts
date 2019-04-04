@@ -16,7 +16,6 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { DatabaseService } from 'src/app/services/database/database.service';
 
-
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;

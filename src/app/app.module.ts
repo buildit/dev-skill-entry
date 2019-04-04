@@ -20,7 +20,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { RegisterComponent } from './materials/organisms/register/register.component';
 import { AngularFirestore } from '@angular/fire/firestore';
 
-
 @NgModule({
   declarations: [
     AppComponent,

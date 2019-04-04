@@ -181,8 +181,6 @@ describe('SkillsPageComponent', () => {
           expect(err).toEqual('didn\'t work');
           done();
         });
-
-
     });
   });
 
@@ -190,8 +188,6 @@ describe('SkillsPageComponent', () => {
     it('should get skills from the database', () => {
       expect(databaseServiceSpy.getSkills).toHaveBeenCalled();
     });
-
-
   });
 
 });

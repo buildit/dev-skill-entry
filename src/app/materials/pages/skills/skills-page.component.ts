@@ -28,7 +28,6 @@ export class SkillsPageComponent implements AfterViewInit {
     this.getSkills();
   }
 
-
   setSkills() {
     const skills = this.components.toArray();
     const skillSet = [];
