@@ -50,7 +50,6 @@ export class SkillsPageComponent implements AfterViewInit {
   getSkills() {
     this.data.getSkills(this.uid).subscribe((doc) => {
       if (doc.exists) {
-        console.log(doc.data().skillSet);
         const fetchedSkills = JSON.parse(doc.data().skillSet);
         const skills = this.components.toArray();
 
