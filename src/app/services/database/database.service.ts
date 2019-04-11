@@ -16,12 +16,4 @@ export class DatabaseService {
   getSkills(uid: string): Observable<firebase.firestore.DocumentData> {
     return this.afs.collection('skill-set').doc(uid).get();
   }
-
-  // setUser(userInfo: { displayName, email, uid }) {
-  //   return this.afs.collection('skill-set').doc(userInfo.uid).set({userInfo});
-  // }
-
-  // getUser(userInfo: { displayName, email, uid }): Observable<firebase.firestore.DocumentData> {
-  //   return this.afs.collection('skill-set').doc(userInfo.uid).get();
-  // }
 }
