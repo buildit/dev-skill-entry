@@ -10,18 +10,18 @@ export class DatabaseService {
   constructor(private afs: AngularFirestore) {}
 
   setSkills(uid: string, skillSet: {}): Promise<any> {
-    return this.afs.collection('users').doc(uid).update({skillSet});
+    return this.afs.collection('skill-set').doc(uid).set({skillSet}, {merge: true});
   }
 
   getSkills(uid: string): Observable<firebase.firestore.DocumentData> {
-    return this.afs.collection('users').doc(uid).get();
+    return this.afs.collection('skill-set').doc(uid).get();
   }
 
-  setUser(userInfo: { displayName, email, uid }) {
-    return this.afs.collection('users').doc(userInfo.uid).set({userInfo});
-  }
+  // setUser(userInfo: { displayName, email, uid }) {
+  //   return this.afs.collection('skill-set').doc(userInfo.uid).set({userInfo});
+  // }
 
-  getUser(userInfo: { displayName, email, uid }): Observable<firebase.firestore.DocumentData> {
-    return this.afs.collection('users').doc(userInfo.uid).get();
-  }
+  // getUser(userInfo: { displayName, email, uid }): Observable<firebase.firestore.DocumentData> {
+  //   return this.afs.collection('skill-set').doc(userInfo.uid).get();
+  // }
 }

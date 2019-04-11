@@ -35,7 +35,6 @@ export class LoginComponent {
 
   loginWithGoogle() {
     this.authService.loginWithGoogle().subscribe((resp) => {
-      this.sendUser(resp);
 
       this.zone.run(() => {
         this.router.navigate(['/users']);
@@ -45,7 +44,6 @@ export class LoginComponent {
 
   loginWithGithub() {
     this.authService.loginWithGithub().subscribe((resp) => {
-      this.sendUser(resp);
 
       this.zone.run(() => {
         this.router.navigate(['/users']);
@@ -57,30 +55,10 @@ export class LoginComponent {
     const email = form.value.email;
     const password = form.value.password;
     this.authService.loginWithEmail(email, password).subscribe((resp) => {
-      this.sendUser(resp);
 
       this.zone.run(() => {
         this.router.navigate(['/users']);
       });
-    });
-  }
-
-  sendUser(resp) {
-    const userInfo = {
-      displayName: resp.user.displayName,
-      email: resp.user.email,
-      uid: resp.user.uid,
-    };
-
-    this.data.getUser(userInfo).subscribe(doc => {
-      if (!doc.exists) {
-        this.data.setUser(userInfo)
-          .catch(err => {
-            return throwError(err);
-          });
-      } else {
-        return;
-      }
     });
   }
 }

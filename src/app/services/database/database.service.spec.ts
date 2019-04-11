@@ -76,36 +76,4 @@ describe('DatabaseService', () => {
       expect(afStoreSpy.collection).toHaveBeenCalled();
     });
   });
-
-  describe('Set User', () => {
-    it('should be able to set user in the database ', () => {
-      populate();
-
-      const userInfo = {
-        displayName: 'Spencer Hilvitz',
-        email: 'spencerhilvitz@gmail.com',
-        uid: 'I4EbE9qJCeQLSRcnNRgz7J2ncVG2',
-      };
-
-      service.setUser(userInfo);
-
-      expect(afStoreSpy.collection).toHaveBeenCalled();
-    });
-  });
-
-  describe('Get User', () => {
-    it('should be able to get user from the database', () => {
-      populate();
-
-      const userInfo = {
-        displayName: 'Spencer Hilvitz',
-        email: 'spencerhilvitz@gmail.com',
-        uid: 'I4EbE9qJCeQLSRcnNRgz7J2ncVG2',
-      };
-
-      service.getUser(userInfo);
-
-      expect(afStoreSpy.collection).toHaveBeenCalled();
-    });
-  });
 });

@@ -99,25 +99,6 @@ describe('RegisterComponent', () => {
     );
   });
 
-  it('should set user in database', () => {
-    const form = {
-      value: {
-        email: 'test@test.com',
-        password: 'test123',
-      },
-    };
-
-    const userInfo = {
-      displayName: 'Spencer',
-      email: 'test@test.com',
-      uid: '1234',
-    };
-
-    component.register(form as any);
-
-    expect(databaseServiceSpy.setUser).toHaveBeenCalledWith(userInfo);
-  });
-
   it('should navigate to /users upon successful registration', () => {
     const form = {
       value: {

@@ -33,7 +33,7 @@ export class RegisterComponent {
         uid: resp.user.uid,
       };
 
-      this.data.setUser(userInfo);
+      // this.data.setUser(userInfo);
 
       this.zone.run(() => {
         this.router.navigate(['/users']);

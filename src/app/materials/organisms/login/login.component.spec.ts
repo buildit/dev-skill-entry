@@ -55,7 +55,7 @@ describe('LoginComponent', () => {
       data: jasmine.createSpy('data').and.returnValue(of()),
     },
 
-    databaseServiceSpy = createSpyObj(['setUser', 'getUser', 'sendUser']);
+    databaseServiceSpy = createSpyObj(['setUser', 'getUser']);
     databaseServiceSpy.getUser.and.returnValue(of(doc));
     databaseServiceSpy.setUser.and.returnValue(new Promise((resolve, reject) => {}));
 
@@ -112,11 +112,11 @@ describe('LoginComponent', () => {
       expect(authServiceSpy.loginWithGoogle).toHaveBeenCalled();
     });
 
-    it('should send user to database when logging in with google', () => {
-      component.loginWithGoogle();
+    // it('should send user to database when logging in with google', () => {
+    //   component.loginWithGoogle();
 
-      expect(databaseServiceSpy.getUser).toHaveBeenCalledWith(resp.user);
-    });
+    //   expect(databaseServiceSpy.getUser).toHaveBeenCalledWith(resp.user);
+    // });
 
     it('should be redirected to /users upon successful login with Google', () => {
       component.loginWithGoogle();
@@ -132,11 +132,11 @@ describe('LoginComponent', () => {
       expect(authServiceSpy.loginWithGithub).toHaveBeenCalled();
     });
 
-    it('should send user to database when logging in with github', () => {
-      component.loginWithGithub();
+    // it('should send user to database when logging in with github', () => {
+    //   component.loginWithGithub();
 
-      expect(databaseServiceSpy.getUser).toHaveBeenCalledWith(resp.user);
-    });
+    //   expect(databaseServiceSpy.getUser).toHaveBeenCalledWith(resp.user);
+    // });
 
     it('upon successful login with Github should be redirected to /users', () => {
       component.loginWithGithub();
@@ -159,18 +159,18 @@ describe('LoginComponent', () => {
       expect(authServiceSpy.loginWithEmail).toHaveBeenCalledWith(form.value.email, form.value.password);
     });
 
-    it('should send user to database when logging in with email', () => {
-      const form = {
-        value: {
-          email: 'test@test.com',
-          password: 'test123',
-        },
-      };
+    // it('should send user to database when logging in with email', () => {
+    //   const form = {
+    //     value: {
+    //       email: 'test@test.com',
+    //       password: 'test123',
+    //     },
+    //   };
 
-      component.loginWithEmail(form as any);
+    //   component.loginWithEmail(form as any);
 
-      expect(databaseServiceSpy.getUser).toHaveBeenCalledWith(resp.user);
-    });
+    //   expect(databaseServiceSpy.getUser).toHaveBeenCalledWith(resp.user);
+    // });
 
     it('upon successful login with Email should be redirected to /users', () => {
       const form = {
@@ -183,29 +183,6 @@ describe('LoginComponent', () => {
       component.loginWithEmail(form as any);
 
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/users']);
-    });
-  });
-
-  describe('sendUser', () => {
-    it('should return an error when the databaseService.setUser has an error', (done) => {
-      component.sendUser(resp);
-
-      databaseServiceSpy.setUser.and.returnValue(Promise.reject('didn\'t work'));
-
-      databaseServiceSpy.setUser(resp.user)
-        .then(() => done())
-        .catch(err => {
-          expect(err).toEqual('didn\'t work');
-          done();
-        });
-    });
-
-    it('should setUser if that user does not exist in the database', () => {
-      component.sendUser(resp);
-
-      databaseServiceSpy.getUser.and.returnValue();
-
-      expect(databaseServiceSpy.setUser).toHaveBeenCalled();
     });
   });
 });

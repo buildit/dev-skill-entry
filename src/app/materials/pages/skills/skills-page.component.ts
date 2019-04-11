@@ -49,7 +49,7 @@ export class SkillsPageComponent implements AfterViewInit {
 
   getSkills() {
     this.data.getSkills(this.uid).subscribe((doc) => {
-      if (doc.data().skillSet) {
+      if (doc.exists) {
         const fetchedSkills = JSON.parse(doc.data().skillSet);
         const skills = this.components.toArray();
 
@@ -58,6 +58,8 @@ export class SkillsPageComponent implements AfterViewInit {
           const updatedSkill = fetchedSkills.filter(skill => skill.id === filteredSkill[0].id);
           componentSkill.value = updatedSkill[0].value;
         });
+      } else {
+        return;
       }
     });
   }
