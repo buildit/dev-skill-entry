@@ -90,6 +90,7 @@ describe('SkillsPageComponent', () => {
     };
 
     doc = {
+      exists: true,
       data: jasmine.createSpy('data').and.returnValue(data),
     },
 
@@ -186,6 +187,8 @@ describe('SkillsPageComponent', () => {
 
   describe('Get Skills', () => {
     it('should get skills from the database', () => {
+      component.getSkills();
+
       expect(databaseServiceSpy.getSkills).toHaveBeenCalled();
     });
   });
