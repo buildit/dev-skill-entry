@@ -1,6 +1,6 @@
 <h1>Skill Entry</h1>
 
-<form [formGroup]="skillsForm">
+<form [formGroup]="skillsForm" (ngSubmit)="setSkills()">
   <div fxLayout="row wrap" fxLayoutGap="20px grid">
     <app-skill-card
       *ngFor="let skill of skillList"
@@ -10,4 +10,5 @@
       fxFlex.lt-sm="100%">
     </app-skill-card>
   </div>
+  <button mat-raised-button color="primary" type="submit">Submit</button>
 </form>

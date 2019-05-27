@@ -29,7 +29,6 @@ describe('AuthGuardService', () => {
     service = TestBed.get(AuthGuardService);
   }
 
-
   beforeEach(() => {
     authService = {
       authenticated: true,

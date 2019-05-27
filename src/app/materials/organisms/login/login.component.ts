@@ -4,6 +4,8 @@ import { AuthService } from 'src/app/services/auth/auth.service';
 import { Router } from '@angular/router';
 import { MatIconRegistry } from '@angular/material';
 import { DomSanitizer } from '@angular/platform-browser';
+import { DatabaseService } from 'src/app/services/database/database.service';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-o-login',
@@ -20,7 +22,8 @@ export class LoginComponent {
               private zone: NgZone,
               private authService: AuthService,
               iconRegistry: MatIconRegistry,
-              sanitizer: DomSanitizer) {
+              sanitizer: DomSanitizer,
+              private data: DatabaseService) {
                 iconRegistry.addSvgIcon(
                   'google',
                   sanitizer.bypassSecurityTrustResourceUrl('assets/icons/icons8-google.svg'));
@@ -31,7 +34,8 @@ export class LoginComponent {
               }
 
   loginWithGoogle() {
-    this.authService.loginWithGoogle().subscribe(() => {
+    this.authService.loginWithGoogle().subscribe((resp) => {
+
       this.zone.run(() => {
         this.router.navigate(['/users']);
       });
@@ -39,7 +43,8 @@ export class LoginComponent {
   }
 
   loginWithGithub() {
-    this.authService.loginWithGithub().subscribe(() => {
+    this.authService.loginWithGithub().subscribe((resp) => {
+
       this.zone.run(() => {
         this.router.navigate(['/users']);
       });
@@ -49,7 +54,8 @@ export class LoginComponent {
   loginWithEmail(form: NgForm) {
     const email = form.value.email;
     const password = form.value.password;
-    this.authService.loginWithEmail(email, password).subscribe((test) => {
+    this.authService.loginWithEmail(email, password).subscribe((resp) => {
+
       this.zone.run(() => {
         this.router.navigate(['/users']);
       });

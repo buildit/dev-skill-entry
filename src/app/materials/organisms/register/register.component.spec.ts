@@ -7,10 +7,12 @@ import { Router } from '@angular/router';
 
 import SpyObj = jasmine.SpyObj;
 import createSpyObj = jasmine.createSpyObj;
-import { of, Observable } from 'rxjs';
+import { of, Observable, throwError } from 'rxjs';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { DatabaseService } from 'src/app/services/database/database.service';
 
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
@@ -18,6 +20,7 @@ describe('RegisterComponent', () => {
   let routerSpy: SpyObj<Router>;
   let afAuthSpy: SpyObj<any>;
   let authServiceSpy: SpyObj<any>;
+  let databaseServiceSpy: SpyObj<any>;
 
   beforeEach(async(() => {
     routerSpy = createSpyObj(['navigate']);
@@ -28,10 +31,17 @@ describe('RegisterComponent', () => {
     };
 
     authServiceSpy = createSpyObj(['register']);
-    authServiceSpy.register.and.returnValue(of({}));
+    authServiceSpy.register.and.returnValue(of({user: { displayName: 'Spencer', email: 'test@test.com', uid: '1234'}}));
+
+    const angularFirestoreSpy = {
+      collection: jasmine.createSpy('collection').and.returnValue({}),
+    };
+
+    databaseServiceSpy = createSpyObj(['setUser']);
+    databaseServiceSpy.setUser.and.returnValue(of(Promise));
 
     TestBed.configureTestingModule({
-      declarations: [ RegisterComponent ],
+      declarations: [RegisterComponent],
       imports: [
         MatCardModule,
         ReactiveFormsModule,
@@ -51,9 +61,16 @@ describe('RegisterComponent', () => {
           provide: AuthService,
           useValue: authServiceSpy,
         },
+        {
+          provide: AngularFirestore,
+          useValue: angularFirestoreSpy,
+        },
+        {
+          provide: DatabaseService,
+          useValue: databaseServiceSpy,
+        },
       ],
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -76,7 +93,10 @@ describe('RegisterComponent', () => {
 
     component.register(form as any);
 
-    expect(authServiceSpy.register).toHaveBeenCalledWith(form.value.email, form.value.password);
+    expect(authServiceSpy.register).toHaveBeenCalledWith(
+      form.value.email,
+      form.value.password,
+    );
   });
 
   it('should navigate to /users upon successful registration', () => {
@@ -90,5 +110,20 @@ describe('RegisterComponent', () => {
     component.register(form as any);
 
     expect(routerSpy.navigate).toHaveBeenCalledWith(['/users']);
+  });
+
+  it('should have an error message when registration fails', () => {
+    const form = {
+      value: {
+        email: 'test@test.com',
+        password: 'test123',
+      },
+    };
+
+    authServiceSpy.register.and.returnValue(throwError({message: 'This email is already in the system'}));
+
+    component.register(form as any);
+
+    expect(component.message).toEqual('This email is already in the system');
   });
 });

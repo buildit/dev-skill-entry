@@ -6,13 +6,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { of, Observable } from 'rxjs';
+import { of, Observable, throwError } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import SpyObj = jasmine.SpyObj;
 import createSpyObj = jasmine.createSpyObj;
 import { AuthService } from 'src/app/services/auth/auth.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { DatabaseService } from 'src/app/services/database/database.service';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -20,6 +22,9 @@ describe('LoginComponent', () => {
   let routerSpy: SpyObj<Router>;
   let afAuthSpy: SpyObj<any>;
   let authServiceSpy: SpyObj<any>;
+  let databaseServiceSpy: SpyObj<any>;
+  let resp: SpyObj<any>;
+  let doc: SpyObj<any>;
 
   beforeEach(async(() => {
     routerSpy = createSpyObj(['navigate']);
@@ -29,10 +34,30 @@ describe('LoginComponent', () => {
       authState: of(Observable),
     };
 
+    resp = {
+      user: {
+        displayName: 'Spencer',
+        email: 'test@test.com',
+        uid: '1234',
+      },
+    },
+
     authServiceSpy = createSpyObj(['loginWithGoogle', 'loginWithGithub', 'loginWithEmail']);
-    authServiceSpy.loginWithGoogle.and.returnValue(of({}));
-    authServiceSpy.loginWithGithub.and.returnValue(of({}));
-    authServiceSpy.loginWithEmail.and.returnValue(of({}));
+    authServiceSpy.loginWithGoogle.and.returnValue(of(resp));
+    authServiceSpy.loginWithGithub.and.returnValue(of(resp));
+    authServiceSpy.loginWithEmail.and.returnValue(of(resp));
+
+    const angularFirestoreSpy = {
+      collection: jasmine.createSpy('collection').and.returnValue({}),
+    };
+
+    doc = {
+      data: jasmine.createSpy('data').and.returnValue(of()),
+    },
+
+    databaseServiceSpy = createSpyObj(['setUser', 'getUser']);
+    databaseServiceSpy.getUser.and.returnValue(of(doc));
+    databaseServiceSpy.setUser.and.returnValue(new Promise((resolve, reject) => {}));
 
     TestBed.configureTestingModule({
       imports: [
@@ -57,6 +82,14 @@ describe('LoginComponent', () => {
           provide: AuthService,
           useValue: authServiceSpy,
         },
+        {
+          provide: AngularFirestore,
+          useValue: angularFirestoreSpy,
+        },
+        {
+          provide: DatabaseService,
+          useValue: databaseServiceSpy,
+        },
       ],
     })
     .compileComponents();
@@ -79,7 +112,13 @@ describe('LoginComponent', () => {
       expect(authServiceSpy.loginWithGoogle).toHaveBeenCalled();
     });
 
-    it('upon successful login with Google should be redirected to /users', () => {
+    // it('should send user to database when logging in with google', () => {
+    //   component.loginWithGoogle();
+
+    //   expect(databaseServiceSpy.getUser).toHaveBeenCalledWith(resp.user);
+    // });
+
+    it('should be redirected to /users upon successful login with Google', () => {
       component.loginWithGoogle();
 
       expect(routerSpy.navigate).toHaveBeenCalledWith(['/users']);
@@ -92,6 +131,12 @@ describe('LoginComponent', () => {
 
       expect(authServiceSpy.loginWithGithub).toHaveBeenCalled();
     });
+
+    // it('should send user to database when logging in with github', () => {
+    //   component.loginWithGithub();
+
+    //   expect(databaseServiceSpy.getUser).toHaveBeenCalledWith(resp.user);
+    // });
 
     it('upon successful login with Github should be redirected to /users', () => {
       component.loginWithGithub();
@@ -113,6 +158,19 @@ describe('LoginComponent', () => {
 
       expect(authServiceSpy.loginWithEmail).toHaveBeenCalledWith(form.value.email, form.value.password);
     });
+
+    // it('should send user to database when logging in with email', () => {
+    //   const form = {
+    //     value: {
+    //       email: 'test@test.com',
+    //       password: 'test123',
+    //     },
+    //   };
+
+    //   component.loginWithEmail(form as any);
+
+    //   expect(databaseServiceSpy.getUser).toHaveBeenCalledWith(resp.user);
+    // });
 
     it('upon successful login with Email should be redirected to /users', () => {
       const form = {

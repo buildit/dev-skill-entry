@@ -1,7 +1,7 @@
 <mat-card class="o-register-registerCard">
   <mat-card-title fxLayoutAlign="center">REGISTER</mat-card-title>
 
-  <form [formGroup]="registerForm" fxLayoutGap="10px" novalidate #f="ngForm" (ngSubmit)="register(f)" fxLayout="column">
+  <form [formGroup]="registerForm" fxLayoutGap="10px" #f="ngForm" (ngSubmit)="register(f)" fxLayout="column">
       <mat-form-field>
         <input matInput type="text" formControlName="email" placeholder="E-mail">
       </mat-form-field>
@@ -11,4 +11,5 @@
       </mat-form-field>
       <button mat-raised-button type="submit" color="primary">REGISTER</button>
     </form>
+    <mat-error *ngIf="message">{{ message }}</mat-error>
 </mat-card>
